@@ -1,0 +1,17 @@
+
+
+
+.salam{
+    background-color: aqua;
+}
+
+.promotionActivator {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  
+
+.promotionDesactivator {
+    pointer-events: none;
+    cursor: default;
+  }

@@ -1,0 +1,55 @@
+<div class="container">
+    <ng-template #errors>
+        <div>
+            {{errorMessage}}
+        </div>
+    </ng-template>
+    <nav *ngIf="authService.hasRole('ADMIN')" class="p-2 m-2 border border-info">
+        <button class="btn btn btn-outline-info" (click)="handleNewProducts()">New Product</button>
+    </nav>
+    <div class="card" *ngIf="products;else errors">
+        <div class="card-header">Products List</div>
+        <div class="card-body">
+                      <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchProduct()">
+                <div class="input-group">
+                    <label class="input-group-text">Keyword:</label>
+                    <input type="text" class="form-control"  formControlName="keyword">
+                    <button class="btn btn-info"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Promotion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of products">
+                        
+                        <td>{{p.id}}</td>
+                        <td>{{p.name}}</td>
+                        <td>{{p.price}}</td>
+
+                        <ng-template #notPromotion>
+                            <a (click)="handleTogglePromotion(p)">
+                              <i class="bi bi-heart"></i>
+                            </a>
+                        </ng-template>
+                        <td  [ngClass]="authService.hasRole('ADMIN')?'promotionActivator':'promotionDesactivator'"><a (click)="handleTogglePromotion(p)" *ngIf="p.promotion; else notPromotion"><i class="bi bi-heart-fill text-success" ></i></a></td>
+                        <td *ngIf="authService.hasRole('ADMIN')"><button (click)="handleDeleteProduct(p)" class="btn btn-danger"> <i class="bi bi-trash"></i></button></td>
+                        <td *ngIf="authService.hasRole('ADMIN')"><button (click)="handleUpdateProduct(p)" class="btn btn-success"> <i class="bi bi-pen"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li *ngFor="let item of [].constructor(this.totalPage); let i = index">
+                    <a [ngClass]="i==currentPage? 'btn-info' : 'btn-outline-info'" (click)="goto(i)" class="btn btn-outline-info m-1 mt-1">{{i+1}}</a>
+                </li>
+            </ul>
+        </div>
+    </div> 
+</div>
+

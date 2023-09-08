@@ -1,0 +1,28 @@
+<div class="container m-3 col-md-6 offset-md-3">
+    {{productFormGroup.value | json}}
+    <form [formGroup]="productFormGroup" (ngSubmit)="handleAddProduct()">
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name">
+            <small style="color:red" *ngIf="productFormGroup.controls['name'].errors && productFormGroup.controls['name'].touched"> {{this.productService.getErrorMessage('Name',productFormGroup.controls['name'].errors)}}</small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="text" class="form-control" formControlName="price">
+            <small style="color:red" *ngIf="productFormGroup.controls['price'].errors && productFormGroup.controls['price'].touched"> {{this.productService.getErrorMessage('Price',productFormGroup.controls['price'].errors)}}</small>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Promotion</label>
+            <input type="checkbox" class="form-check" formControlName="promotion">
+        </div>
+        <button [disabled]="!productFormGroup.valid" class="btn btn-success" type="submit">Save</button>
+
+
+
+
+    </form>
+
+
+
+
+</div>
